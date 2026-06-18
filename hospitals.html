@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hospital Search Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">🏥 Wellness</div>
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('index') }}" class="nav-link">Home</a></li>
+                <li><a href="{{ url_for('physical') }}" class="nav-link">Physical</a></li>
+                <li><a href="{{ url_for('mental') }}" class="nav-link">Mental</a></li>
+                <li><a href="{{ url_for('social') }}" class="nav-link">Social</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero small">
+        <div class="hero-content">
+            <h1>Hospitals for Pincode {{ pincode }}</h1>
+        </div>
+    </header>
+    <main class="container">
+        <section class="card">
+            <h2>Budget: {{ budget.capitalize() }}</h2>
+            {% if note %}
+                <p class="note">{{ note }}</p>
+            {% endif %}
+            {% if hospitals %}
+                <ul>
+                    {% for hospital in hospitals %}
+                        <li>
+                            <strong>{{ hospital.name }}</strong><br>
+                            Address: {{ hospital.address }}<br>
+                            Phone: {{ hospital.phone }}<br>
+                            Services: {{ hospital.services }}<br>
+                            Pincode: {{ hospital.pincode }} — Budget: {{ hospital.budget }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No hospitals found for this pincode and budget.</p>
+            {% endif %}
+        </section>
+    </main>
+    <footer class="footer">
+        <p>Your Health, Your Happiness, Your Strength — Start Today! 💪</p>
+        <p class="footer-muted">Stay Strong. Stay Healthy. Stay Safe. ✨</p>
+    </footer>
+</body>
+</html>

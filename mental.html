@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mental Health Support</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">🏥 Wellness</div>
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('index') }}" class="nav-link">Home</a></li>
+                <li><a href="{{ url_for('physical') }}" class="nav-link">Physical</a></li>
+                <li><a href="{{ url_for('mental') }}" class="nav-link">Mental</a></li>
+                <li><a href="{{ url_for('social') }}" class="nav-link">Social</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero small">
+        <div class="hero-content">
+            <h1>Caring Support for {{ feeling.capitalize() }}</h1>
+        </div>
+    </header>
+    <main class="container">
+        <section class="card">
+            <div class="mental-response">
+                <div class="emoji">{{ response.get('emoji', '💙') }}</div>
+                <div class="mental-content">
+                    <h2>{{ response.get('title', feeling.capitalize()) }}</h2>
+                    <p class="lead">{{ response.message }}</p>
+                    <div class="exercise">
+                        <h3>Quick Exercise</h3>
+                        <p>{{ response.exercise }}</p>
+                    </div>
+                    {% if response.actions %}
+                    <div class="actions">
+                        <h3>Try These</h3>
+                        <ul>
+                            {% for a in response.actions %}
+                                <li>• {{ a }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    {% if response.resources %}
+                    <div class="resources">
+                        <h3>Resources</h3>
+                        <ul>
+                            {% for r in response.resources %}
+                                {% if r is mapping and r.link %}
+                                    <li><a href="{{ r.link }}" target="_blank">{{ r.label }}</a></li>
+                                {% else %}
+                                    <li>{{ r }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </main>
+        <footer class="footer">
+            <p>Your Health, Your Happiness, Your Strength — Start Today! 💪</p>
+            <p class="footer-muted">Stay Strong. Stay Healthy. Stay Safe. ✨</p>
+        </footer>
+</body>
+</html>

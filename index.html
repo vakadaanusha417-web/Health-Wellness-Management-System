@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Health & Wellness Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">🏥 Wellness</div>
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('index') }}" class="nav-link">Home</a></li>
+                <li><a href="{{ url_for('physical') }}" class="nav-link">Physical</a></li>
+                <li><a href="{{ url_for('mental') }}" class="nav-link">Mental</a></li>
+                <li><a href="{{ url_for('social') }}" class="nav-link">Social</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Health & Wellness Management System</h1>
+            <p>Your Journey To Better Health Starts Here</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="card home-sections">
+            <div class="intro-card">
+                <h2>Health & Wellness Management System</h2>
+                <p>Choose one area below to access tailored support for physical, mental, and social wellbeing.</p>
+            </div>
+            <div class="grid-3">
+                <a class="section-card physical-link" href="{{ url_for('physical') }}">
+                    <div class="section-card-top">
+                        <span class="section-card-icon">💪</span>
+                        <h2>Physical Health</h2>
+                    </div>
+                    <p>Health tips, medicine reminders, and nearby hospital search in a neat, easy-to-use box.</p>
+                </a>
+                <a class="section-card mental-link" href="{{ url_for('mental') }}">
+                    <div class="section-card-top">
+                        <span class="section-card-icon">🧠</span>
+                        <h2>Mental Health</h2>
+                    </div>
+                    <p>Choose how you feel and receive calming support, breathing exercises, and comfort tips.</p>
+                </a>
+                <a class="section-card social-link" href="{{ url_for('social') }}">
+                    <div class="section-card-top">
+                        <span class="section-card-icon">🤝</span>
+                        <h2>Social Health</h2>
+                    </div>
+                    <p>Community ideas, support schemes, and practical first aid advice for everyday life.</p>
+                </a>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <p>Your Health, Your Happiness, Your Strength — Start Today! 💪</p>
+        <p class="footer-muted">Stay Strong. Stay Healthy. Stay Safe. ✨</p>
+    </footer>
+</body>
+</html>

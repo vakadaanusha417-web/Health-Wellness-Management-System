@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Social Health</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">🏥 Wellness</div>
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('index') }}" class="nav-link">Home</a></li>
+                <li><a href="{{ url_for('physical') }}" class="nav-link">Physical</a></li>
+                <li><a href="{{ url_for('mental') }}" class="nav-link">Mental</a></li>
+                <li><a href="{{ url_for('social') }}" class="nav-link">Social</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero small">
+        <div class="hero-content">
+            <h1>Social Health</h1>
+        </div>
+    </header>
+    <main class="container">
+        <section class="card social">
+            <h2>Social Schemes</h2>
+            <div class="schemes-list" aria-label="Social schemes">
+                {% for scheme in schemes %}
+                    <div class="scheme-row">
+                        <div class="scheme-main">
+                            <span class="scheme-name">{{ scheme.name }}</span>
+                            <a class="visit-link" href="{{ scheme.link }}" target="_blank">Visit</a>
+                        </div>
+                        <div class="scheme-details">
+                            {% if scheme.started %}<div><strong>Started:</strong> {{ scheme.started }}</div>{% endif %}
+                            {% if scheme.purpose %}<div><strong>Purpose:</strong> {{ scheme.purpose }}</div>{% endif %}
+                            {% if scheme.benefits %}<div><strong>Benefits:</strong> {{ scheme.benefits }}</div>{% endif %}
+                            {% if scheme.eligibility %}<div><strong>Eligibility:</strong> {{ scheme.eligibility }}</div>{% endif %}
+                            {% if scheme.apply %}<div><strong>How to apply:</strong> {{ scheme.apply }}</div>{% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        <section class="card social">
+            <h2>Emergency First Aid</h2>
+            <label for="firstAidSelector" class="label-small">Choose a first aid topic:</label>
+            <select id="firstAidSelector" class="first-aid-select">
+                <option value="">Select topic</option>
+                {% for item in first_aid %}
+                    <option value="{{ loop.index0 }}" data-advice="{{ item.advice | e }}">{{ item.topic }}</option>
+                {% endfor %}
+            </select>
+            <div class="first-aid-advice" id="firstAidAdvice">
+                <p>Select a topic to see first aid advice here.</p>
+            </div>
+        </section>
+
+        <section class="card social">
+            <h2>Low-Cost Healthcare Facilities</h2>
+            <ul>
+                <li>Government Hospitals</li>
+                <li>Primary Health Centres (PHCs)</li>
+                <li>Community Health Centres (CHCs)</li>
+                <li>Free Medical Camps</li>
+            </ul>
+            <p>Government hospitals and PHCs provide affordable healthcare services for the public at low or no cost.</p>
+        </section>
+
+        <section class="card social">
+            <h2>Health Awareness</h2>
+            <ul>
+                <li>Dengue Prevention</li>
+                <li>Vaccination Awareness</li>
+                <li>Personal Hygiene</li>
+                <li>Nutrition and Healthy Lifestyle</li>
+            </ul>
+        </section>
+
+        <section class="card social">
+            <h2>Emergency Helpline Numbers</h2>
+            <ul>
+                <li>Ambulance - 108</li>
+                <li>Police - 112</li>
+                <li>Fire Service - 101</li>
+                <li>Women Helpline - 181</li>
+                <li>Child Helpline - 1098</li>
+            </ul>
+        </section>
+        <!-- Community problems moved to Physical Health page -->
+    </main>
+    <footer class="footer">
+        <p>Your Health, Your Happiness, Your Strength — Start Today! 💪</p>
+        <p class="footer-muted">Stay Strong. Stay Healthy. Stay Safe. ✨</p>
+    </footer>
+</body>
+</html>

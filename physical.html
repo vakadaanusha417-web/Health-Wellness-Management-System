@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Physical Health</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">🏥 Wellness</div>
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('index') }}" class="nav-link">Home</a></li>
+                <li><a href="{{ url_for('physical') }}" class="nav-link">Physical</a></li>
+                <li><a href="{{ url_for('mental') }}" class="nav-link">Mental</a></li>
+                <li><a href="{{ url_for('social') }}" class="nav-link">Social</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero small">
+        <div class="hero-content">
+            <h1>Physical Health</h1>
+        </div>
+    </header>
+    <main class="container">
+        <section class="card physical">
+            <h2>Health Problem Tips</h2>
+            <form action="{{ url_for('health_tips') }}" method="post">
+                <select name="condition" required>
+                    <option value="">Choose problem</option>
+                    {% for item in physical_conditions %}
+                        <option value="{{ item.condition }}">{{ item.condition }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Get Tips</button>
+            </form>
+        </section>
+        <section class="card physical">
+            <h2>Medicine Reminders</h2>
+            <form action="{{ url_for('add_reminder') }}" method="post">
+                <input type="text" name="name" placeholder="Your name" required>
+                <input type="text" name="medicine" placeholder="Medicine name" required>
+                <input type="time" name="time" required>
+                <button type="submit">Set Reminder</button>
+            </form>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="alerts">
+                        {% for category, message in messages %}
+                            <div class="alert {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            <div class="reminder-list">
+                <h4>Saved reminders</h4>
+                {% if reminders %}
+                    <ul>
+                        {% for reminder in reminders %}
+                            <li>
+                                {{ reminder.name }} - {{ reminder.medicine }} at {{ reminder.time }}
+                                <form class="inline-form" action="{{ url_for('delete_reminder', reminder_id=reminder['id']) }}" method="post" style="display:inline;margin-left:10px;">
+                                    <button type="submit" class="btn-delete">Delete</button>
+                                </form>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No reminders yet.</p>
+                {% endif %}
+            </div>
+        </section>
+        <section class="card physical">
+            <h2>Find Nearby Hospitals</h2>
+            <form action="{{ url_for('find_hospitals') }}" method="post">
+                <input type="text" name="pincode" placeholder="Pincode" required>
+                <select name="budget" required>
+                    <option value="">Budget</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+                <button type="submit">Search</button>
+            </form>
+        </section>
+        <section class="card physical" id="community-post">
+            <h2>Community Problems & Suggestions</h2>
+            {% if problems %}
+                <ul class="problems-list">
+                    {% for prob in problems %}
+                        <li class="problem-item">
+                            <strong>Problem:</strong> {{ prob.problem }} <em>by {{ prob.author if prob.author else 'Other' }}</em>
+                            <div class="suggestions">
+                                <h5>Suggestions</h5>
+                                <ul>
+                                    {% for s in suggestions %}
+                                        {% if s.problem_id == prob.id %}
+                                            <li>{{ s.suggestion }} <em>— {{ s.author if s.author else 'Other' }}</em></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                                <form action="{{ url_for('add_suggestion') }}" method="post" class="suggestion-form">
+                                    <input type="hidden" name="problem_id" value="{{ prob.id }}">
+                                    <input type="text" name="author" placeholder="Your name (optional)">
+                                    <textarea name="suggestion" placeholder="Write a suggestion for others" required></textarea>
+                                    <button type="submit">Add Suggestion</button>
+                                </form>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No community problems yet. Be the first to share one.</p>
+            {% endif %}
+            <h4>Post a community problem</h4>
+            <form action="{{ url_for('add_problem') }}" method="post">
+                <input type="text" name="author" placeholder="Your name (optional)">
+                <textarea name="problem" placeholder="Describe a local health problem or need" required></textarea>
+                <button type="submit">Post Problem</button>
+            </form>
+        </section>
+    </main>
+    <footer class="footer">
+        <p>Your Health, Your Happiness, Your Strength — Start Today! 💪</p>
+        <p class="footer-muted">Stay Strong. Stay Healthy. Stay Safe. ✨</p>
+    </footer>
+</body>
+</html>
